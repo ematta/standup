@@ -1,12 +1,12 @@
 import { exists } from "https://deno.land/std@0.202.0/fs/mod.ts";
 
-const { args } = Deno
+const { args } = Deno;
 
 const dir = `${Deno.env.get("HOME")}/.standup/`;
-const fileDate = new Date().toISOString().split('T')[0];
+const fileDate = new Date().toISOString().split("T")[0];
 
-if(args.includes("--read")) {
-  await read()
+if (args.includes("--read")) {
+  await read();
 } else {
   await write();
 }
@@ -23,26 +23,26 @@ async function write() {
 
   const isReadableDir = await exists(dir, {
     isReadable: true,
-    isDirectory: true
+    isDirectory: true,
   });
 
-  if(!isReadableDir) {
+  if (!isReadableDir) {
     Deno.mkdir(dir, { recursive: true });
   }
 
   const response = {
     action,
-    timestamp
+    timestamp,
   };
 
   await Deno.writeFile(
     `${dir}/${fileDate}`,
     new TextEncoder().encode(
-      `${timestamp}: ${action}\n`
+      `${timestamp}: ${action}\n`,
     ),
     {
       append: true,
       create: true,
-    }
+    },
   );
 }

@@ -30,11 +30,6 @@ async function write() {
     Deno.mkdir(dir, { recursive: true });
   }
 
-  const response = {
-    action,
-    timestamp,
-  };
-
   await Deno.writeFile(
     `${dir}/${fileDate}`,
     new TextEncoder().encode(

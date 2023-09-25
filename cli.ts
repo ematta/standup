@@ -5,15 +5,23 @@ const { args } = Deno;
 const dir = `${Deno.env.get("HOME")}/.standup/`;
 const fileDate = new Date().toISOString().split("T")[0];
 
-if (args.includes("--read")) {
-  await read();
+if (args.includes("--today")) {
+  await read(`${dir}/${fileDate}`);
+} else if (args.includes("--yesterday")) {
+  await read(`${dir}/${getYesterdaysDate()}`);
 } else {
   await write();
 }
 
-async function read() {
+function getYesterdaysDate() {
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  return date.toISOString().split('T')[0];
+}
+
+async function read(file: string) {
   const decoder = new TextDecoder("utf-8");
-  const data = await Deno.readFile(`${dir}/${fileDate}`);
+  const data = await Deno.readFile(file);
   console.log(decoder.decode(data));
 }
 

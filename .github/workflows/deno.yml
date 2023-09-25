@@ -36,15 +36,3 @@ jobs:
 
       - name: Run build
         run: deno task build
-
-      - name: Create release
-        uses: Roang-zero1/github-create-release-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload release artifacts
-        uses: Roang-zero1/github-upload-release-artifacts-action@v2
-        with:
-          args: "standup"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
